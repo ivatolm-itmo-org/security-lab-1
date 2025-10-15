@@ -84,4 +84,4 @@ def get_data():
     return {"users": [dict(u) for u in users]}
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
