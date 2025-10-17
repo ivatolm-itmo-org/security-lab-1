@@ -1,4 +1,5 @@
 from flask import Flask, request
+from markupsafe import escape
 import bcrypt
 import jwt
 
@@ -37,7 +38,7 @@ def check_password_hash(stored_hash, password):
 @app.route("/auth/register", methods=["POST"])
 def register():
     data = request.get_json()
-    username, password = data.get("username"), data.get("password")
+    username, password = escape(data.get("username")), data.get("password")
     if not username or not password:
         return {"error": "Username and password required"}, 400
 
@@ -57,7 +58,7 @@ def register():
 @app.route("/auth/login", methods=["POST"])
 def login():
     data = request.get_json()
-    username, password = data.get("username"), data.get("password")
+    username, password = escape(data.get("username")), data.get("password")
 
     conn = get_db()
     user = conn.execute(
